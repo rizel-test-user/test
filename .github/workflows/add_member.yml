@@ -13,9 +13,11 @@ jobs:
       - uses: actions/github-script@v6
         with:
           script: |
-            const issue = await github.rest.issues.get({
+            const request = await github.rest.issues.get({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
             })
-            console.log(issue)
+            const regex = /@(\w+)/g;
+            const userToAdd= request.data.title.match(regex)
+            console.log('hey i added this user',userToAdd)
