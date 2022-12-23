@@ -14,12 +14,3 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
             })
-  filerun:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: setup-node@v3
-        with:
-          node-version: '16'
-      - run: npm ci
-      - run: node random.js      
