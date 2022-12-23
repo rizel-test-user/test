@@ -20,7 +20,7 @@ jobs:
             })
             const regex = /(?<=@)\w+/g;
             const userToAdd= request.data.title.match(regex)[0]
-            await github.rest.orgs.addOrUpdateMembershipForUser({
+            await github.rest.repos.addCollaborator({
               org: context.repo.owner,
               username: userToAdd,
               role: 'member'
