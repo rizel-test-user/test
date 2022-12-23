@@ -12,6 +12,9 @@ jobs:
     steps:
       - uses: actions/github-script@v6
         with:
+          result-encoding: string
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          retries: 3
           script: |
             const request = await github.rest.issues.get({
               issue_number: context.issue.number,
