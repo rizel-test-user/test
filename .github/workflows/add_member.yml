@@ -18,6 +18,23 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
             })
-            const regex = /@(\w+)/g;
-            const userToAdd= request.data.title.match(regex)
-            console.log('hey i added this user',userToAdd)
+            const regex = /(?<=@)\w+/g;
+            const userToAdd= request.data.title.match(regex)[0]
+            await github.rest.orgs.addOrUpdateMembershipForUser({
+              org: context.repo.owner,
+              username: userToAdd,
+              role: 'member'
+            })
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `@${userToAdd} has been invited to the organization.`
+            })
+            await github.rest.issues.update({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'closed'
+            })
+            return `@${userToAdd} has been invited to the organization.`
