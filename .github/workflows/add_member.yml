@@ -21,23 +21,4 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
             })
-            const regex = /(?<=@)\w+/g;
-            const userToAdd= request.data.title.match(regex)[0]
-            await github.rest.repos.addCollaborator({
-              owner: 'derek-botany',
-              repo: 'test',
-              username: userToAdd
-            })
-            await github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: `@${userToAdd} has been invited to the organization.`
-            })
-            await github.rest.issues.update({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              state: 'closed'
-            })
-            return `@${userToAdd} has been invited to the organization.`
+         run: node random.js
