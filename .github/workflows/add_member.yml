@@ -21,9 +21,9 @@ jobs:
             const regex = /(?<=@)\w+/g;
             const userToAdd= request.data.title.match(regex)[0]
             await github.rest.repos.addCollaborator({
-              org: context.repo.owner,
-              username: userToAdd,
-              role: 'member'
+              owner: 'derek-botany',
+              repo: 'test',
+              username: userToAdd
             })
             await github.rest.issues.createComment({
               issue_number: context.issue.number,
