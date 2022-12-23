@@ -1,24 +1,25 @@
-# This workflow will add a member to the organization when an issue is labeled with "approved"
-
-name: Invite member to organization
-
 on:
   issues:
     types: [labeled]
 
 jobs:
-  comment:
+  get_issue:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v6
         with:
-          result-encoding: string
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          retries: 3
           script: |
             const request = await github.rest.issues.get({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
             })
-         run: node random.js
+  filerun:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: setup-node@v3
+        with:
+          node-version: '16'
+      - run: npm ci
+      - run: node random.js      
