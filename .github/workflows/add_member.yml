@@ -3,14 +3,13 @@ on:
     types: [labeled]
 
 jobs:
-  get_issue:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/github-script@v6
-        with:
-          script: |
-            const request = await github.rest.issues.get({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-            })
+  filerun:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v3
+        - uses: setup-node@v3
+          with:
+            node-version: '16'
+        - run: npm ci
+        - run: node random.js      
+
