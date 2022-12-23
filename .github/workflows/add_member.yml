@@ -4,11 +4,10 @@ name: Invite member to organization
 
 on:
   issues:
-    types: [labeled]
-    
+    types: [opened]
+
 jobs:
-   comment:
-    if:  github.event.label.name == 'approved'
+  comment:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v6
@@ -18,9 +17,5 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '👋 You've been invited! Check your email for an invitation. It expires in 7 days.'
+              body: '👋 Thanks for reporting!'
             })
-
-
-
-     
